@@ -8,11 +8,12 @@
  */
 pipeline {
 
-
+    agent any
 
     // Pipeline stages
     stages {
 
+        
         ////////// Step 1 //////////
         stage('Testing') {
             steps {
