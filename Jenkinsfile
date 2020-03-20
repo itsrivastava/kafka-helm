@@ -10,7 +10,7 @@ pipeline {
 
     agent any
 
-    // Pipeline stages
+    // Pipeline stages test
     stages {
 
         
