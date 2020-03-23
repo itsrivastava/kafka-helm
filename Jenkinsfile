@@ -26,6 +26,7 @@ pipeline {
                     helm list
                     helm push-artifactory kafka-7.3.1.tgz helm
                     echo "pushed in atrifactory"
+                    helm repo update
                     DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
                     if [ $DEPLOYED == 0 ] ; then
                       helm install --generate-name helm/kafka-7.3.1
