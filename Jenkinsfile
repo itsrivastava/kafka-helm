@@ -16,6 +16,6 @@ podTemplate(
                         credentialsId: 'github',
                         url: 'https://github.com/itsrivastava/kafka-helm.git'
             }
-
+            }
         }
     }
