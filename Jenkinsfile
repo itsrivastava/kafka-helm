@@ -4,7 +4,7 @@ pipeline {
       label 'kafka-pod'
       containerTemplate {
         name 'kafka-pod'
-        image 'dtzar/helm-kubectl'
+        image 'wardviaene/helm-s3'
         ttyEnabled true
         command 'cat'
       }
@@ -23,7 +23,7 @@ pipeline {
                     
                     helm dependency update
                     helm package .
-                    helm init
+                    
                     helm push-artifactory ${PACKAGE}-*.tgz helm
                     DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
                     if [ $DEPLOYED == 0 ] ; then
