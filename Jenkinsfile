@@ -1,36 +1,34 @@
-pipeline {
-  agent {
-    kubernetes {
-      label 'helm-pod'
-      containerTemplate {
-        name 'helm'
-        image 'wardviaene/helm-s3'
-        ttyEnabled true
-        command 'cat'
-      }
-    }
-  }
-  stages {
-    stage('Run helm') {
-      steps {
-        container('helm') {
-          git branch: "master",
-                   credentialsId: 'github',
-                   url: 'https://github.com/itsrivastava/kafka-helm.git'
-          sh '''
-          
-          PACKAGE=demo-chart
-          
-         
-          cp -r /home/helm/.helm ~
-          helm repo add helm http://34.67.48.75:32445/artifactory/helm-remote --username admin --password Welcome@123
-          cd helm/${PACKAGE}
-          helm dependency update
-          helm package .
-          helm push --force ${PACKAGE}-*.tgz my-charts
-          '''
+podTemplate(
+    label: 'mypod', 
+    inheritFrom: 'default',
+    containers: [
+        containerTemplate(
+            name: 'docker', 
+            image: 'docker:18.02',
+            ttyEnabled: true,
+            command: 'cat'
+        ),
+        containerTemplate(
+            name: 'helm', 
+            image: 'ibmcom/k8s-helm:v2.6.0',
+            ttyEnabled: true,
+            command: 'cat'
+        )
+    ],
+    volumes: [
+        hostPathVolume(
+            hostPath: '/var/run/docker.sock',
+            mountPath: '/var/run/docker.sock'
+        )
+    ]
+) {
+    node('mypod') {
+        def commitId
+        stage ('checkout code') {
+            git branch: "master",
+                  credentialsId: 'eldada-bb',
+                        url: 'https://github.com/eldada/jenkins-pipeline-kubernetes.git'
         }
-      }
+
     }
-  }
 }
