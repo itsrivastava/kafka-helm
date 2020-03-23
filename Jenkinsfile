@@ -4,7 +4,7 @@ podTemplate(
     containers: [
         containerTemplate(name: 'kafka', image: 'dtzar/helm-kubectl'),
         containerTemplate(name: 'docker', image:'trion/jenkins-docker-client'),
-    ],
+    ])
     {
         //node = the pod label
         node('kafka-pod'){
@@ -18,4 +18,4 @@ podTemplate(
             }
 
         }
-    })
+    }
