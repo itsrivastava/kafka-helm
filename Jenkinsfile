@@ -4,7 +4,7 @@ pipeline {
       label 'kafka-pod'
       containerTemplate {
         name 'kafka-pod'
-        image 'wardviaene/helm-s3'
+        image 'lachlanevenson/k8s-helm'
         ttyEnabled true
         command 'cat'
       }
@@ -18,13 +18,13 @@ pipeline {
                     git url: 'https://github.com/itsrivastava/kafka-helm.git', branch: 'master', credentialsId: 'github'
                     sh '''
                     PACKAGE=kafka-chart
-                   
+                    helm plugin install https://github.com/belitre/helm-push-artifactory-plugin --version v0.3.0
                     helm repo add helm http://34.67.48.75:32445/artifactory/helm --username admin --password Welcome@123
                     
                     helm dependency update
                     helm package .
                     
-                    helm push --force ${PACKAGE}-*.tgz helm
+                    helm push-artifactory ${PACKAGE}-*.tgz helm
                     DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
                     if [ $DEPLOYED == 0 ] ; then
                       helm install --name ${PACKAGE} helm/${PACKAGE}
