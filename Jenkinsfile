@@ -4,7 +4,7 @@ pipeline {
       label 'kafka-pod'
       containerTemplate {
         name 'kafka-pod'
-        image 'lachlanevenson/k8s-helm'
+        image 'dtzar/helm-kubectl'
         ttyEnabled true
         command 'cat'
       }
