@@ -16,12 +16,12 @@ podTemplate(
         )
     ]
 ) {
-    node('mypod') {
+    node('kafka') {
         def commitId
         stage ('checkout code') {
             git branch: "master",
-                  credentialsId: 'eldada-bb',
-                  url: 'https://github.com/eldada/jenkins-pipeline-kubernetes.git'
+                  credentialsId: 'github',
+                  url: 'https://github.com/itsrivastava/kafka-helm.git'
         }
 
     }
