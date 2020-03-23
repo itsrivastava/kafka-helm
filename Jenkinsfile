@@ -1,15 +1,9 @@
 podTemplate(
-    label: 'mypod', 
+    label: 'kafka', 
     inheritFrom: 'default',
     containers: [
         containerTemplate(
-            name: 'docker', 
-            image: 'docker:18.02',
-            ttyEnabled: true,
-            command: 'cat'
-        ),
-        containerTemplate(
-            name: 'helm', 
+            name: 'kafka', 
             image: 'ibmcom/k8s-helm:v2.6.0',
             ttyEnabled: true,
             command: 'cat'
