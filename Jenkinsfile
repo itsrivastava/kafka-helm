@@ -23,8 +23,8 @@ pipeline {
                     
                     helm dependency update
                     helm package .
-                    
-                    helm push-artifactory ${PACKAGE}.tgz helm
+                    helm list
+                    helm push-artifactory kafka-7.3.1.tgz helm
                     DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
                     if [ $DEPLOYED == 0 ] ; then
                       helm install --name ${PACKAGE} helm/${PACKAGE}
