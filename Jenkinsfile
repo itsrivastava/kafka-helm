@@ -23,7 +23,7 @@ pipeline {
                     
                     helm dependency update
                     helm package .
-                    
+                    helm init
                     helm push-artifactory ${PACKAGE}-*.tgz helm
                     DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
                     if [ $DEPLOYED == 0 ] ; then
