@@ -19,7 +19,7 @@ pipeline {
                     sh '''
                     PACKAGE=kafka-chart
                     helm repo add helm http://34.67.48.75:32445/artifactory/helm-remote --username admin --password Welcome@123
-                    cd helm/${PACKAGE}
+                    
                     helm dependency update
                     helm package .
                     
