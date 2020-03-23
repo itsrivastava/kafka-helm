@@ -24,7 +24,7 @@ pipeline {
                     helm dependency update
                     helm package .
                     
-                    helm push ${PACKAGE}-*.tgz helm
+                    
                     DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
                     if [ $DEPLOYED == 0 ] ; then
                       helm install --name ${PACKAGE} helm/${PACKAGE}
