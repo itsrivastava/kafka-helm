@@ -1,20 +1,19 @@
-podTemplate(
-    name: 'kafka-pod',
-    label: 'kafka-pod',
-    containers: [
-        containerTemplate(name: 'kafka', image: 'dtzar/helm-kubectl'),
-        containerTemplate(name: 'docker', image:'trion/jenkins-docker-client'),
-    ])
-    {
-        //node = the pod label
-        node('kafka-pod'){
-            //container = the container label
-          stages{
-            stage('run helm for kafka'){
-              steps {
-               container('kafka') {
-                    
-               
+pipeline {
+  agent {
+    kubernetes {
+      label 'kafka-pod'
+      containerTemplate {
+        name 'kafka-pod'
+        image 'dtzar/helm-kubectl'
+        ttyEnabled true
+        command 'cat'
+      }
+    }
+  }
+  stages {
+    stage('Run helm') {
+      steps {
+        container('kafka-pod') {
                     echo "Check out kafka code"
                     git url: 'https://github.com/itsrivastava/kafka-helm.git', branch: 'master', credentialsId: 'github'
                     sh '''
@@ -33,7 +32,8 @@ podTemplate(
                     fi
                     echo "deployed!"
                     '''
-            }
-            }}}
         }
+      }
     }
+  }
+}
