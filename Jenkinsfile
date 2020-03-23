@@ -5,10 +5,6 @@ podTemplate(
         containerTemplate(name: 'kafka', image: 'dtzar/helm-kubectl'),
         containerTemplate(name: 'docker', image:'trion/jenkins-docker-client'),
     ],
-    volumes: [
-        hostPathVolume(mountPath: '/var/run/docker.sock',
-        hostPath: '/var/run/docker.sock',
-    ],
     {
         //node = the pod label
         node('kafka-pod'){
