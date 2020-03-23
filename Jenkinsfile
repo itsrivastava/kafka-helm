@@ -27,7 +27,7 @@ podTemplate(
         stage ('checkout code') {
             git branch: "master",
                   credentialsId: 'eldada-bb',
-                        url: 'https://github.com/eldada/jenkins-pipeline-kubernetes.git'
+                  url: 'https://github.com/eldada/jenkins-pipeline-kubernetes.git'
         }
 
     }
