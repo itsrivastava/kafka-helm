@@ -28,9 +28,9 @@ pipeline {
                     echo "pushed in atrifactory"
                     DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
                     if [ $DEPLOYED == 0 ] ; then
-                      helm install --name ${PACKAGE} helm/${PACKAGE}
+                      helm install helm/kafka-7.3.1
                     else
-                      helm upgrade ${PACKAGE} helm/${PACKAGE}
+                      helm upgrade helm/kafka-7.3.1
                     fi
                     echo "deployed!"
                     '''
