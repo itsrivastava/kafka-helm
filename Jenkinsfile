@@ -1,28 +1,25 @@
 podTemplate(
-    label: 'kafka', 
-    inheritFrom: 'default',
+    name: 'kafka-pod',
+    label: 'kafka-pod',
     containers: [
-        containerTemplate(
-            name: 'kafka', 
-            image: 'ibmcom/k8s-helm:v2.6.0',
-            ttyEnabled: true,
-            command: 'cat'
-        )
+        containerTemplate(name: 'kafka', image: 'dtzar/helm-kubectl'),
+        containerTemplate(name: 'docker', image:'trion/jenkins-docker-client'),
     ],
     volumes: [
-        hostPathVolume(
-            hostPath: '/var/run/docker.sock',
-            mountPath: '/var/run/docker.sock'
-        )
-    ]
-) {
-    node('kafka') {
-        def commitId
-        stage ('checkout code') {
-            git branch: "master",
-                  credentialsId: 'github',
-                  url: 'https://github.com/itsrivastava/kafka-helm.git'
-        }
+        hostPathVolume(mountPath: '/var/run/docker.sock',
+        hostPath: '/var/run/docker.sock',
+    ],
+    {
+        //node = the pod label
+        node('kafka-pod'){
+            //container = the container label
+            stage('checkout scm'){
+                steps {
+                    echo "Check out kafka code"
+                    git branch: "master",
+                        credentialsId: 'github',
+                        url: 'https://github.com/itsrivastava/kafka-helm.git'
+            }
 
-    }
-}
+        }
+    })
