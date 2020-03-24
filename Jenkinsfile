@@ -29,7 +29,7 @@ pipeline {
                     helm repo update
                     DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
                     if [ $DEPLOYED == 0 ] ; then
-                      helm install --generate-name http://34.67.48.75:32445/artifactory/helm-local/kafka
+                      helm install --generate-name --devel helm/kafka
                     else
                       helm upgrade helm/kafka-7.3.1
                     fi
