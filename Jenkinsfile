@@ -29,7 +29,7 @@ pipeline {
                     helm repo update
                     DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
                     if [ $DEPLOYED == 0 ] ; then
-                      helm install --generate-name --set persistence.existingClaim=kafka-volume helm/kafka
+                      helm install --generate-name helm/kafka
                     else
                       helm upgrade helm/kafka-7.3.1
                     fi
