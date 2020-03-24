@@ -24,7 +24,7 @@ pipeline {
                     helm dependency update
                     helm package .
                     helm list
-                    helm push-artifactory kafka-7.3.1.tgz helm
+                    helm push-artifactory kafka-7.3.1.tgz helm --skip-reindex
                     echo "pushed in atrifactory"
                     helm repo update
                     DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
