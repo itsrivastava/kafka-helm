@@ -14,7 +14,7 @@ pipeline {
     stage('Run helm') {
       steps {
         container('kafka-pod') {
-                    echo "Check out kafka code"
+                    echo "Check out kafka code -- test"
                     git url: 'https://github.com/itsrivastava/kafka-helm.git', branch: 'master', credentialsId: 'github'
                     sh '''
                     PACKAGE=kafka-chart
